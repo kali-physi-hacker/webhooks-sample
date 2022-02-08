@@ -1,8 +1,9 @@
-import os 
+import os
 from pathlib import Path
 from this import d
 from flask import Flask, request
 from git import Repo
+import git as gitMod
 
 
 app = Flask(__name__)
@@ -20,7 +21,7 @@ def send_email_to_contributors_mock():
     """
     Sends email to contributors of the repo
     """
-    pass 
+    pass
 
 
 @app.route("/payload/", methods=["POST"])
@@ -29,7 +30,12 @@ def handle_hooks():
     repo_name = request.json["repository"]["name"]
 
     project_directory = os.path.join(home_directory, repo_name)
-    Repo.clone_from(clone_url, project_directory)
+
+    if not os.path.exists(project_directory):
+        Repo.clone_from(clone_url, project_directory)
+
+    git = gitMod.cmd.Git(project_directory)
+    git.pull()
 
     send_email_to_contributors_mock()
 
