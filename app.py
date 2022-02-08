@@ -17,13 +17,10 @@ home_directory = str(Path.home())
 
 @app.route("/payload/", methods=["POST"])
 def handle_hooks():
-    import pdb
+    clone_url = request.json["repository"]["clone_url"]
+    Repo.clone_from(clone_url, home_directory)
 
-    pdb.set_trace()
-    Repo.clone_from()
-    import pdb
-
-    pdb.set_trace()
+    return {"status": "ok"}
 
 
 if __name__ == "__main__":
