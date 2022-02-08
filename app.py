@@ -1,4 +1,6 @@
+import os 
 from pathlib import Path
+from this import d
 from flask import Flask, request
 from git import Repo
 
@@ -17,9 +19,10 @@ home_directory = str(Path.home())
 @app.route("/payload/", methods=["POST"])
 def handle_hooks():
     clone_url = request.json["repository"]["clone_url"]
-    import pdb; pdb.set_trace()
-    # project_directory = clone_url.split()
-    Repo.clone_from(clone_url, home_directory)
+    repo_name = request.json["repository"]["name"]
+
+    project_directory = os.path.join(home_directory, repo_name)
+    Repo.clone_from(clone_url, project_directory)
 
     return {"status": "ok"}
 
