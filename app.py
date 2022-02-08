@@ -18,7 +18,7 @@ home_directory = str(Path.home())
 def handle_hooks():
     clone_url = request.json["repository"]["clone_url"]
     import pdb; pdb.set_trace()
-    project_directory = clone_url.split()
+    # project_directory = clone_url.split()
     Repo.clone_from(clone_url, home_directory)
 
     return {"status": "ok"}
