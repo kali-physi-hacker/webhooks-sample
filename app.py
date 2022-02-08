@@ -1,5 +1,4 @@
 from pathlib import Path
-
 from flask import Flask, request
 from git import Repo
 
