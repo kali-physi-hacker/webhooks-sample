@@ -16,6 +16,13 @@ def hello_world():
 home_directory = str(Path.home())
 
 
+def send_email_to_contributors_mock():
+    """
+    Sends email to contributors of the repo
+    """
+    pass 
+
+
 @app.route("/payload/", methods=["POST"])
 def handle_hooks():
     clone_url = request.json["repository"]["clone_url"]
@@ -23,6 +30,8 @@ def handle_hooks():
 
     project_directory = os.path.join(home_directory, repo_name)
     Repo.clone_from(clone_url, project_directory)
+
+    send_email_to_contributors_mock()
 
     return {"status": "ok"}
 
